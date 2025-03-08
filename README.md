@@ -10,10 +10,10 @@ $ docker compose up
 
 CA証明書とその秘密鍵は下記の構成で生成されます。
 > ca-cert/<br>
->  ├ CA証明書.pem<br>
->  ├ CA証明書.der<br>
->  └ private/<br>
->     └ CA証明書の秘密鍵.pem
+> 　├ CA証明書.pem<br>
+> 　├ CA証明書.der<br>
+> 　└ private/<br>
+> 　　　└ CA証明書の秘密鍵.pem
 
 ※ すでにCA証明書が存在する場合は新規作成は行われません。
 
@@ -26,8 +26,8 @@ $ docker compose --profile create-csr up
 
 サーバー証明書署名要求は下記の構成で生成されます。
 > server-cert/<br>
->  ├ サーバー証明書署名要求.csr<br>
->  └ サーバー証明書拡張コンフィグ.txt
+> 　├ サーバー証明書署名要求.csr<br>
+> 　└ サーバー証明書拡張コンフィグ.txt
 
 ## サーバー証明書への署名
 
@@ -42,9 +42,9 @@ $ docker compose up
 
 サーバー証明書とその秘密鍵は下記の構成で生成されます。
 > server-cert/<br>
->  ├ サーバー証明書.crt<br>
->  └ private/<br>
->     └ サーバー証明書の秘密鍵.pem
+> 　├ サーバー証明書.crt<br>
+> 　└ private/<br>
+> 　　　└ サーバー証明書の秘密鍵.pem
 
 ## 署名の検証
 下記のコマンドを実行し、署名が正常に機能するかを確認します。
