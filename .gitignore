@@ -1,0 +1,4 @@
+ca-cert/*
+!ca-cert/options.env
+server-cert/*
+!server-cert/options.env

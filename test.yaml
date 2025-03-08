@@ -1,0 +1,33 @@
+services:
+
+  # 証明書の検証
+  # $ env DNS=${DNS} CA_CERT_PATH=${CA証明書} CERT_PATH=${サーバ証明書} PRIVKEY_PATH=${サーバ証明書秘密鍵} docker compose -f test.yaml up
+  test:
+    environment:
+
+      # アクセスするDNS（例：test.example.com）
+      - DNS=${DNS:?DNSが設定されていません}
+
+    volumes:
+
+      # CA証明書（例：./ca-cert/example-ca-cert.pem）
+      - type: bind
+        source: ${CA_CERT_PATH:?CA証明書のファイルパスが指定されていません}
+        target: /ca-cert.pem
+        read_only: true
+
+      # サーバー証明書（例：./server-cert/WILD.example.com.crt）
+      - type: bind
+        source: ${CERT_PATH:?サーバー証明書のファイルパスが指定されていません}
+        target: /cert.pem
+        read_only: true
+
+      # サーバー証明書の秘密鍵（例：./server-cert/private/WILD.example.com.pem）
+      - type: bind
+        source: ${PRIVKEY_PATH:?サーバー証明書の秘密鍵のパスが指定されていません}
+        target: /privkey.pem
+        read_only: true
+
+    build:
+      context: ./.docker/test-server
+      dockerfile: nginx.Dockerfile

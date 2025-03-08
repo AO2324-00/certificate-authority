@@ -1,0 +1,36 @@
+services:
+
+  # 署名を行う（自己署名証明書がない場合は発行する）
+  # $ docker compose up
+  ca:
+    env_file:
+      - ./ca-cert/options.env
+    build:
+      context: ./.docker
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./ca-cert/
+        target: /etc/pki
+      - type: bind
+        source: ./server-cert/
+        target: /server-cert
+    entrypoint: sh -c "sh /create-ca.sh && sh /sign.sh"
+  
+  # サーバ証明書署名要求を発行する
+  # $ docker compose --profile create-csr up
+  create-csr:
+    profiles:
+      - create-csr
+    env_file:
+      - ./ca-cert/options.env
+      - ./server-cert/options.env
+    build:
+      context: ./.docker
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./server-cert/
+        target: /etc/pki
+    entrypoint: sh -c "sh /create-csr.sh"
+
